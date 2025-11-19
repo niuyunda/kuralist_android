@@ -1,11 +1,8 @@
 package com.kuralist.app.features.profile.presentation
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Person
@@ -16,13 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuralist.app.R
@@ -259,6 +256,7 @@ private fun DataAttributionSection(
                 
                 // Clickable link
                 val annotatedString = buildAnnotatedString {
+                    pushLink(link = LinkAnnotation.Url(url = "https://www.educationcounts.govt.nz/"))
                     withStyle(
                         style = SpanStyle(
                             color = Color(0xFF2196F3),
@@ -267,27 +265,12 @@ private fun DataAttributionSection(
                     ) {
                         append(context.getString(R.string.visit_education_counts))
                     }
-                    addStringAnnotation(
-                        tag = "URL",
-                        annotation = "https://www.educationcounts.govt.nz/",
-                        start = 0,
-                        end = context.getString(R.string.visit_education_counts).length
-                    )
+                    pop()
                 }
-                
-                ClickableText(
+
+                Text(
                     text = annotatedString,
-                    style = MaterialTheme.typography.bodyMedium,
-                    onClick = { offset ->
-                        annotatedString.getStringAnnotations(
-                            tag = "URL",
-                            start = offset,
-                            end = offset
-                        ).firstOrNull()?.let { annotation ->
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(annotation.item))
-                            context.startActivity(intent)
-                        }
-                    }
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }

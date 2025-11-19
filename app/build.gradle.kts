@@ -20,9 +20,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        
+        resourceConfigurations += setOf("en", "zh")
+
         // Supported locales
-        resConfigs("en", "zh")
 
         // Build config fields
         buildConfigField("String", "SUPABASE_URL", "\"https://wdtdmzptgfmhzdsmnxnl.supabase.co\"")
